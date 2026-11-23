@@ -1,0 +1,64 @@
+name: Refresh journal counts
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * *'
+
+permissions: {}
+
+concurrency:
+  group: journal-counts-pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-date:
+    if: github.ref_name == github.event.repository.default_branch && github.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    outputs:
+      refresh: ${{ steps.calendar.outputs.refresh }}
+    steps:
+      - name: Limit automatic refreshes to 2026
+        id: calendar
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != schedule || "$(date -u +%Y)" == 2026 ]]; then
+            echo 'refresh=true' >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    needs: check-date
+    if: needs.check-date.outputs.refresh == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Fetch OpenAlex article counts
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+        run: python scripts/update_counts.py
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - name: Publish dashboard
+        id: pages
+        uses: actions/deploy-pages@v4

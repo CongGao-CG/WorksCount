@@ -1,0 +1,75 @@
+:root {
+  color-scheme: light;
+  --paper: #f7f7f2;
+  --ink: #202c2a;
+  --muted: #57635e;
+  --rule: #ccd1c7;
+  --past: #8d9e96;
+  --present: #067763;
+  font: 100%/1.5 "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+.wrap { width: min(1080px, 90%); margin-inline: auto; }
+.masthead { border-bottom: 1px solid var(--rule); }
+.masthead-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.wordmark { display: inline-flex; align-items: center; gap: .65rem; font-weight: 700; letter-spacing: -.035em; }
+.mark { display: inline-block; width: 1.4rem; height: 1.2rem; transform: skewY(-10deg); background: repeating-linear-gradient(to top, var(--present) 0 3px, transparent 3px 6px); }
+a { color: #045e50; text-underline-offset: .21em; }
+a:hover { text-decoration-thickness: 2px; }
+.source { font-size: .88rem; text-decoration: none; }
+.source:hover { text-decoration: underline; }
+.intro { display: flex; justify-content: space-between; gap: 1.75rem; align-items: end; padding: clamp(2.8rem, 6vw, 5rem) 0 clamp(2.4rem, 5vw, 3.8rem); }
+h1, h2, p { margin: 0; }
+h1, h2, tbody th, tfoot th { font-family: "STIX Two Text", "Iowan Old Style", Georgia, serif; font-weight: 500; }
+h1 { font-size: clamp(2.8rem, 6vw, 5.15rem); line-height: 1.02; letter-spacing: -.055em; }
+.lede { color: var(--muted); margin-top: 1rem; font-size: clamp(.96rem, 1.9vw, 1.12rem); }
+.snapshot { flex: none; padding-left: 1rem; border-left: 2px solid var(--present); }
+.snapshot span, .snapshot time { display: block; }
+.snapshot span { color: var(--muted); font-size: .76rem; }
+.snapshot time { font-size: .9rem; font-weight: 600; }
+.counts { border-top: 2px solid var(--ink); }
+.table-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; padding: 1.35rem 0 1.2rem; }
+h2 { font-size: clamp(1.4rem, 2.7vw, 1.85rem); line-height: 1.2; letter-spacing: -.035em; }
+label { color: var(--muted); font-size: .78rem; }
+select { font: inherit; color: var(--ink); background-color: var(--paper); border: 1px solid var(--rule); border-radius: .2rem; padding: .45rem .3rem .45rem .55rem; margin-left: .2rem; }
+:focus-visible { outline: 2px solid var(--present); outline-offset: 3px; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.journal-col { width: 54%; }
+th, td { text-align: left; }
+thead { color: var(--muted); background: #eaede5; }
+thead th { padding: .7rem 1rem; font-size: .8rem; font-weight: 600; }
+.key { display: inline-block; width: .52rem; height: .52rem; margin-right: .45rem; }
+.year-2025 { background: var(--past); }
+.year-2026 { background: var(--present); }
+tbody tr { border-bottom: 1px solid var(--rule); }
+tbody th { font-size: clamp(1.08rem, 2.1vw, 1.42rem); line-height: 1.2; padding: 1rem; }
+tbody td { padding: .65rem 1rem; }
+.numeric { text-align: right; font-variant-numeric: tabular-nums; }
+td.numeric { font-size: 1.05rem; }
+.bar-track { margin-top: .28rem; height: 3px; background: #e4e8df; }
+.bar { height: 100%; display: block; }
+tfoot { background: #e6ece3; border-top: 1px solid var(--ink); }
+tfoot th, tfoot td { padding: .85rem 1rem; font-weight: 600; }
+tfoot th { font-size: 1.25rem; }
+.method { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem 2.2rem; border-top: 1px solid var(--rule); padding: 1.5rem 0 3.2rem; margin-top: 2.5rem; }
+.method h2 { font-size: 1.36rem; }
+.method p { font-size: .92rem; color: var(--muted); }
+.data-link { display: inline-block; margin-top: .75rem; font-size: .85rem; }
+.sr-only { position: absolute; height: 1px; width: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 700px) {
+  .intro { display: grid; gap: 1.25rem; }
+  .snapshot { display: flex; gap: .5rem; align-items: center; }
+  .method { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .wrap { width: 92%; }
+  .table-tools { align-items: start; flex-direction: column; }
+  thead th, tbody th, tbody td, tfoot td, tfoot th { padding-inline: .5rem; }
+  tbody th { overflow-wrap: anywhere; }
+  .journal-col { width: 50%; }
+  .lede { max-width: 32ch; }
+}
