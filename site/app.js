@@ -3,7 +3,6 @@ const dateFormat = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC", day: "numeric", month: "short", year: "numeric",
 });
 const years = [2025, 2026];
-const sort = document.querySelector("#sort");
 const rows = document.querySelector("#rows");
 
 function countCell(count, year, maximum) {
@@ -23,14 +22,8 @@ function countCell(count, year, maximum) {
 }
 
 function renderRows(journals, maximum) {
-  const ordered = [...journals];
-  if (sort.value === "name") {
-    ordered.sort((a, b) => a.name.localeCompare(b.name, "en"));
-  } else if (sort.value !== "listed") {
-    ordered.sort((a, b) => b[sort.value] - a[sort.value]);
-  }
   const fragment = document.createDocumentFragment();
-  for (const journal of ordered) {
+  for (const journal of journals) {
     const row = document.createElement("tr");
     const label = document.createElement("th");
     label.scope = "row";
@@ -60,11 +53,6 @@ async function loadCounts() {
     }
     const maximum = Math.max(...journals.flatMap(journal => years.map(year => journal[`articles_${year}`])));
     renderRows(journals, maximum);
-    for (const year of years) {
-      const total = journals.reduce((sum, journal) => sum + journal[`articles_${year}`], 0);
-      document.querySelector(`#total-${year}`).textContent = numberFormat.format(total);
-    }
-    sort.addEventListener("change", () => renderRows(journals, maximum));
     const updated = document.querySelector("#updated");
     updated.dateTime = updated_at;
     updated.textContent = dateFormat.format(date) + " UTC";

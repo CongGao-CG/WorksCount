@@ -1,6 +1,6 @@
 # Works Count
 
-A GitHub Pages dashboard of 2025 and 2026 article counts for eight journals, using OpenAlex as the source. The table shows each journal, the total for each year, and the latest successful refresh date.
+A GitHub Pages dashboard of 2025 and 2026 article counts for eight journals, using OpenAlex as the source. The dashboard shows each journal’s annual counts and the latest successful refresh date.
 
 ## Publish
 

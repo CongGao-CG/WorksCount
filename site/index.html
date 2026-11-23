@@ -11,18 +11,9 @@
   <script src="./app.js" defer></script>
 </head>
 <body>
-  <header class="masthead">
-    <div class="wrap masthead-inner">
-      <span class="wordmark"><i class="mark" aria-hidden="true"></i>Works Count</span>
-      <a class="source" href="https://openalex.org/">OpenAlex <span aria-hidden="true">↗</span></a>
-    </div>
-  </header>
   <main class="wrap">
     <div class="intro">
-      <div>
-        <h1>Journal article counts</h1>
-        <p class="lede">Articles indexed by OpenAlex across eight journals in 2025 and 2026.</p>
-      </div>
+      <h1>Journal article counts</h1>
       <div class="snapshot" hidden>
         <span>Latest update</span>
         <time id="updated"></time>
@@ -32,18 +23,7 @@
     <p id="status" role="status">Loading article counts…</p>
     <noscript><p>Enable JavaScript to view the table, or <a href="./data.json">open the data file</a>.</p></noscript>
 
-    <section class="counts" aria-labelledby="journal-heading" hidden>
-      <div class="table-tools">
-        <h2 id="journal-heading">Counts by journal</h2>
-        <label>Sort by
-          <select id="sort">
-            <option value="listed">Journal list order</option>
-            <option value="name">Journal name (A–Z)</option>
-            <option value="articles_2026">2026 count (highest first)</option>
-            <option value="articles_2025">2025 count (highest first)</option>
-          </select>
-        </label>
-      </div>
+    <div class="counts" hidden>
       <table>
         <caption class="sr-only">OpenAlex articles by journal and publication year</caption>
         <colgroup><col class="journal-col"><col><col></colgroup>
@@ -53,18 +33,13 @@
           <th scope="col" class="numeric"><span class="key year-2026"></span>2026</th>
         </tr></thead>
         <tbody id="rows"></tbody>
-        <tfoot><tr>
-          <th scope="row">Total</th>
-          <td class="numeric" id="total-2025"></td>
-          <td class="numeric" id="total-2026"></td>
-        </tr></tfoot>
       </table>
-    </section>
+    </div>
 
     <section class="method" aria-labelledby="method-heading">
       <h2 id="method-heading">How articles are counted</h2>
       <div>
-        <p>Each count includes works that OpenAlex classifies as articles, assigns to the indicated publication year, and lists under the journal as their primary source. The 2026 totals reflect records available at the latest update.</p>
+        <p>Each count includes works that OpenAlex classifies as articles, assigns to the indicated publication year, and lists under the journal as their primary source. The 2026 counts reflect records available at the latest update.</p>
         <a class="data-link" href="./data.json" hidden>View count data (JSON) <span aria-hidden="true">↗</span></a>
       </div>
     </section>
