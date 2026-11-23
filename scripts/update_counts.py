@@ -12,6 +12,7 @@ from urllib.request import Request, urlopen
 
 
 OUTPUT = Path(__file__).resolve().parents[1] / "site" / "data.json"
+CYCLONE_TOPIC_ID = "T11483"
 JOURNALS = {
     "S137773608": ("Nature", "0028-0836"),
     "S3880285": ("Science", "0036-8075"),
@@ -24,10 +25,13 @@ JOURNALS = {
 }
 
 
-def fetch_counts(year):
+def fetch_counts(year, topic_id=None):
     source_field = "primary_location.source.id"
+    filters = ["type:article", f"publication_year:{year}", f"{source_field}:{'|'.join(JOURNALS)}"]
+    if topic_id:
+        filters.append(f"topics.id:{topic_id}")
     query = urlencode({
-        "filter": f"type:article,publication_year:{year},{source_field}:{'|'.join(JOURNALS)}",
+        "filter": ",".join(filters),
         "group_by": source_field,
         "per_page": 100,
     })
@@ -64,6 +68,8 @@ def fetch_counts(year):
 def main():
     previous = fetch_counts(2025)
     current = fetch_counts(2026)
+    previous_cyclones = fetch_counts(2025, CYCLONE_TOPIC_ID)
+    current_cyclones = fetch_counts(2026, CYCLONE_TOPIC_ID)
     snapshot = {
         "updated_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "journals": [
@@ -73,6 +79,8 @@ def main():
                 "issn": issn,
                 "articles_2025": previous[source_id],
                 "articles_2026": current[source_id],
+                "cyclone_articles_2025": previous_cyclones[source_id],
+                "cyclone_articles_2026": current_cyclones[source_id],
             }
             for source_id, (name, issn) in JOURNALS.items()
         ],

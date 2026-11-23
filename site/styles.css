@@ -4,7 +4,6 @@
   --ink: #202c2a;
   --muted: #57635e;
   --rule: #ccd1c7;
-  --past: #8d9e96;
   --present: #067763;
   font: 100%/1.5 "Inter", sans-serif;
   color: var(--ink);
@@ -17,40 +16,30 @@ body { margin: 0; }
 a { color: #045e50; text-underline-offset: .21em; }
 a:hover { text-decoration-thickness: 2px; }
 .intro { display: flex; justify-content: space-between; gap: 1.75rem; align-items: end; padding: clamp(2.8rem, 6vw, 5rem) 0 clamp(2.4rem, 5vw, 3.8rem); }
-h1, h2, p { margin: 0; }
-h1, h2, tbody th { font-weight: 500; }
+h1, p { margin: 0; }
+h1, tbody th { font-weight: 500; }
 h1 { font-size: clamp(2.8rem, 6vw, 5.15rem); line-height: 1.02; letter-spacing: -.055em; }
 .snapshot { flex: none; padding-left: 1rem; border-left: 2px solid var(--present); }
 .snapshot span, .snapshot time { display: block; }
 .snapshot span { color: var(--muted); font-size: .76rem; }
 .snapshot time { font-size: .9rem; font-weight: 600; }
-.counts { border-top: 2px solid var(--ink); }
-h2 { font-size: clamp(1.4rem, 2.7vw, 1.85rem); line-height: 1.2; letter-spacing: -.035em; }
 :focus-visible { outline: 2px solid var(--present); outline-offset: 3px; }
 table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+caption { text-align: left; border-top: 2px solid var(--ink); padding: .9rem 0; font-size: 1.25rem; font-weight: 600; }
+#cyclone-table, #cyclone-status { margin-top: 2rem; }
 .journal-col { width: 54%; }
 th, td { text-align: left; }
 thead { color: var(--muted); background: #eaede5; }
 thead th { padding: .7rem 1rem; font-size: .8rem; font-weight: 600; }
-.key { display: inline-block; width: .52rem; height: .52rem; margin-right: .45rem; }
-.year-2025 { background: var(--past); }
-.year-2026 { background: var(--present); }
 tbody tr { border-bottom: 1px solid var(--rule); }
 tbody th { font-size: clamp(1.08rem, 2.1vw, 1.42rem); line-height: 1.2; padding: 1rem; }
 tbody td { padding: .65rem 1rem; }
 .numeric { text-align: right; font-variant-numeric: tabular-nums; }
 td.numeric { font-size: 1.05rem; }
-.bar-track { margin-top: .28rem; height: 3px; background: #e4e8df; }
-.bar { height: 100%; display: block; }
-.method { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem 2.2rem; border-top: 1px solid var(--rule); padding: 1.5rem 0 3.2rem; margin-top: 2.5rem; }
-.method h2 { font-size: 1.36rem; }
-.method p { font-size: .92rem; color: var(--muted); }
-.data-link { display: inline-block; margin-top: .75rem; font-size: .85rem; }
-.sr-only { position: absolute; height: 1px; width: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.method { color: var(--muted); font-size: .92rem; border-top: 1px solid var(--rule); padding: 1.5rem 0 3.2rem; margin-top: 2.5rem; }
 @media (max-width: 700px) {
   .intro { display: grid; gap: 1.25rem; }
   .snapshot { display: flex; gap: .5rem; align-items: center; }
-  .method { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .wrap { width: 92%; }
