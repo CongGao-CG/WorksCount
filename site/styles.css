@@ -24,10 +24,13 @@ h1 { font-size: clamp(2.8rem, 6vw, 5.15rem); line-height: 1.02; letter-spacing: 
 .snapshot span { color: var(--muted); font-size: .76rem; }
 .snapshot time { font-size: .9rem; font-weight: 600; }
 :focus-visible { outline: 2px solid var(--present); outline-offset: 3px; }
-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-caption { text-align: left; border-top: 2px solid var(--ink); padding: .9rem 0; font-size: 1.25rem; font-weight: 600; }
-#cyclone-table, #cyclone-status { margin-top: 2rem; }
-.journal-col { width: 54%; }
+.counts { overflow-x: auto; }
+table { width: 100%; min-width: 44rem; border-top: 2px solid var(--ink); border-collapse: collapse; table-layout: fixed; }
+.journal-col { width: 30%; }
+.prior-year { width: 12%; }
+th[scope="colgroup"] { text-align: center; color: var(--ink); border-bottom: 1px solid var(--rule); }
+th[scope="colgroup"]:last-child, thead tr:nth-child(2) th:nth-child(3), tbody td:nth-child(4) { border-left: 1px solid var(--rule); }
+#cyclone-status { margin-top: 1rem; }
 th, td { text-align: left; }
 thead { color: var(--muted); background: #eaede5; }
 thead th { padding: .7rem 1rem; font-size: .8rem; font-weight: 600; }
@@ -45,5 +48,4 @@ td.numeric { font-size: 1.05rem; }
   .wrap { width: 92%; }
   thead th, tbody th, tbody td { padding-inline: .5rem; }
   tbody th { overflow-wrap: anywhere; }
-  .journal-col { width: 50%; }
 }

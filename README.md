@@ -14,9 +14,9 @@ The four aggregate queries can run without a key. To use your own OpenAlex quota
 
 ## Counting method
 
-Each query selects one `publication_year` and `type:article`, filters to the eight journals’ OpenAlex primary source IDs, and groups by `primary_location.source.id`. Both years are refreshed together so corrections and newly indexed articles can appear in either column. Each column covers records assigned to that publication year as of the refresh date. [OpenAlex works](https://help.openalex.org/data/works/) · [Grouped counts](https://help.openalex.org/api/grouping/)
+Each query selects one `publication_year` and `type:article`, filters to the eight journals’ OpenAlex primary source IDs, and groups by `primary_location.source.id`. Both years are refreshed together so corrections and newly indexed articles can appear in either year. Each column covers records assigned to that publication year as of the refresh date. [OpenAlex works](https://help.openalex.org/data/works/) · [Grouped counts](https://help.openalex.org/api/grouping/)
 
-The cyclone table adds the filter `topics.id:T11483`, which includes articles with [Tropical and Extratropical Cyclones Research](https://openalex.org/topics/T11483) among their assigned topics. Each table shows the 2026 count as a percentage of its corresponding 2025 count.
+The cyclone columns add the filter `topics.id:T11483`, which includes articles with [Tropical and Extratropical Cyclones Research](https://openalex.org/topics/T11483) among their assigned topics. Each 2026 column shows the 2026 count as a percentage of its corresponding 2025 count.
 
 The journal names, ISSNs and OpenAlex IDs are in [the updater](scripts/update_counts.py). Each successful run writes `site/data.json` and publishes it with the page.
 

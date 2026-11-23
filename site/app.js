@@ -23,7 +23,31 @@ function openAlexLink(href, text) {
   return link;
 }
 
-function renderRows(rows, journals, field) {
+function appendYearCounts(row, journal, field) {
+  for (const year of years) {
+    const cell = document.createElement("td");
+    cell.className = "numeric";
+    const count = journal[`${field}_${year}`];
+    if (!Number.isSafeInteger(count) || count < 0) {
+      cell.textContent = "Unavailable";
+      row.append(cell);
+      continue;
+    }
+    const filters = ["type:article", `primary_location.source.id:${journal.source_id}`, `publication_year:${year}`];
+    if (field === "cyclone_articles") filters.push("topics.id:T11483");
+    const url = new URL("https://openalex.org/works");
+    url.searchParams.set("filter", filters.join(","));
+    cell.append(openAlexLink(url.href, numberFormat.format(count)));
+    if (year === 2026) {
+      const previous = journal[`${field}_2025`];
+      const ratio = Number.isSafeInteger(previous) && previous > 0 ? percentFormat.format(count / previous) : "N/A";
+      cell.append(` (${ratio})`);
+    }
+    row.append(cell);
+  }
+}
+
+function renderRows(rows, journals) {
   const fragment = document.createDocumentFragment();
   for (const journal of journals) {
     const row = document.createElement("tr");
@@ -31,22 +55,8 @@ function renderRows(rows, journals, field) {
     label.scope = "row";
     label.append(openAlexLink(`https://openalex.org/sources/${journal.source_id}`, journal.name));
     row.append(label);
-    for (const year of years) {
-      const cell = document.createElement("td");
-      cell.className = "numeric";
-      const count = journal[`${field}_${year}`];
-      const filters = ["type:article", `primary_location.source.id:${journal.source_id}`, `publication_year:${year}`];
-      if (field === "cyclone_articles") filters.push("topics.id:T11483");
-      const url = new URL("https://openalex.org/works");
-      url.searchParams.set("filter", filters.join(","));
-      cell.append(openAlexLink(url.href, numberFormat.format(count)));
-      if (year === 2026) {
-        const previous = journal[`${field}_2025`];
-        const ratio = previous === 0 ? "N/A" : percentFormat.format(count / previous);
-        cell.append(` (${ratio})`);
-      }
-      row.append(cell);
-    }
+    appendYearCounts(row, journal, "articles");
+    appendYearCounts(row, journal, "cyclone_articles");
     fragment.append(row);
   }
   rows.replaceChildren(fragment);
@@ -65,13 +75,7 @@ async function loadCounts() {
           hasCounts(journal, "articles"))) {
       throw new Error("Invalid count data");
     }
-    renderRows(document.querySelector("#rows"), journals, "articles");
-    if (journals.every(journal => hasCounts(journal, "cyclone_articles"))) {
-      renderRows(document.querySelector("#cyclone-rows"), journals, "cyclone_articles");
-      document.querySelector("#cyclone-table").hidden = false;
-    } else {
-      document.querySelector("#cyclone-status").hidden = false;
-    }
+    renderRows(document.querySelector("#rows"), journals);
     const updated = document.querySelector("#updated");
     updated.dateTime = updated_at;
     updated.textContent = dateFormat.format(date) + " UTC";
